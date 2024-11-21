@@ -9,6 +9,7 @@ pipeline {
 
         stage('code checkout') {
             steps {
+                echo "checking the code"
                 checkout scm
             }
         }
