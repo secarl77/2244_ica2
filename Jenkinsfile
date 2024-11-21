@@ -14,26 +14,34 @@ pipeline {
             }
         }
 
-    //    stage('Listing files') {
-    //        steps {
-    //            sh 'ls -l'
-    //       }
-    //    }
+    /*    stage('Listing files') {
+            steps {
+                sh 'ls -l'
+           }
+    */    }
 
-    //   stage('Build and Push') {
-    //        steps {
-    //            echo 'Building..'
-    //            dir('/var/www/html/'){
-    //                withCredentials([usernamePassword(credentialsId: 'dockerhub-auth', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-    //                    sh '''
-    //                        docker build -t msalim22/todo-list-app:v2 .
-    //                        docker login -u ${USERNAME} -p ${PASSWORD}
-    //                        docker push msalim22/todo-list-app:v2
-    //                    '''
-    //                }
-    //            }
-    //        }
-    //    }
+       stage('Build and Push') {
+            steps {
+                echo 'Building..'
+                dir('/var/www/html/'){
+         //           withCredentials([usernamePassword(credentialsId: 'dockerhub-auth', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        def buildId = env.BUILD_ID
+                        sh '''
+                            docker build -t 2244_ica2:lasted .
+                            docker build -t custom-nginx:develop-${buildId} .
+                           
+                        '''
+                    }
+                }
+            }
+        }
+
+    /*
+     docker build -t msalim22/todo-list-app:v2 .
+                            docker build -t msalim22/todo-list-app:v2 .
+                            docker login -u ${USERNAME} -p ${PASSWORD}
+                            docker push msalim22/todo-list-app:v2
+    */
 
     /*    stage('Deploy container'){
             steps {
