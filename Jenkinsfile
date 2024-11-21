@@ -25,10 +25,9 @@ pipeline {
                 echo 'Building..'
                 dir('/var/www/html/'){
          //           withCredentials([usernamePassword(credentialsId: 'dockerhub-auth', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        def buildId = env.BUILD_ID
                         sh '''
                             docker build -t 2244_ica2:lasted .
-                            docker build -t custom-nginx:develop-${buildId} .
+                            docker build -t 2244_ica2:develop-${env.BUILD_ID} .
                            
                         '''
                     }
