@@ -35,13 +35,7 @@ pipeline {
             }
         }
 
-    /*
-     docker build -t msalim22/todo-list-app:v2 .
-                            docker build -t msalim22/todo-list-app:v2 .
-                            docker login -u ${USERNAME} -p ${PASSWORD}
-                            docker push msalim22/todo-list-app:v2
-    */
-
+    
     /*    stage('Deploy container'){
             steps {
                 echo "deploying container"
