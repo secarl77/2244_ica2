@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                //echo "This is Build Docker image stage"
+                //echo "This is Build Docker image stage 2"
                 sh 'docker build -t 2244_ica2:latest .'
                 sh "docker tag 2244_ica2:latest 2244_ica2:develop-${env.BUILD_ID}"
                 sh 'docker images'
