@@ -1,6 +1,11 @@
 pipeline {
     agent any
     stages {
+        stage('Cleanup'){
+            steps{
+                cleanWs()
+            }
+        }
         stage('Checkout the code') {
             steps {
                 checkout scm
@@ -78,4 +83,59 @@ pipeline {
     
     }
 }
+
+pipeline {
+    agent any
+    stages {
+        stage('Cleanup') {
+            steps {
+                cleanWs()
+            }
+        }
+
+        stage('Clone Git Repo') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Clone from repository') {
+            steps {
+                git url: 'https://github.com/sanjeebnepal/2244_ica2_.git', branch: 'develop', credentialsId: 'GIT'
+            }
+        }
+
+        stage('Build and run docker image') {
+            steps {
+                sh 'sudo docker build -t sanjeebnepal/devops_exam2:latest .'
+                sh "sudo docker tag sanjeebnepal/devops_exam2:latest sanjeebnepal/devops_exam2:develop-${env.BUILD_ID}" 
+                sh "sudo kill -9 $(sudo lsof -t -i:8081)"
+                sh 'sudo docker run -d -p 8081:80 sanjeebnepal/devops_exam2:latest'
+            } 
+        }
+
+
+        stage('Build and Push') {
+            steps {
+                echo 'Building..'
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-auth', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        sh '''
+                            sudo docker login -u ${USERNAME} -p ${PASSWORD}
+                            sudo docker push sanjeebnepal/devops_exam2:latest
+                        '''
+                        sh "sudo docker push sanjeebnepal/devops_exam2:develop-${env.BUILD_ID}"
+                    }
+            }
+        }
+
+        stage('testing') {
+            steps {
+                sh 'curl -I 192.168.219.163:8081'
+            }
+        }
+
+    
+    }
+}
+
+
 */
