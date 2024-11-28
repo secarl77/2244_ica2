@@ -11,6 +11,8 @@ pipeline {
                 //echo "This is Build Docker image stage 2"
                 sh 'docker build -t 2244_ica2_develop:latest .'
                 sh 'docker images'
+                sh 'docker run -d -p 8081:80 2244_ica2_develop:latest'
+                sh 'docker ps'
             }
         }
 
