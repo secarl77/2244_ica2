@@ -15,7 +15,7 @@ pipeline {
             steps {
                 //echo "This is Build Docker image stage"
                 sh 'docker build -t 2244_ica2:latest .'
-                sh 'docker tag 2244_ica2_develop:latest secarl/2244_ica2:develop-${env.BUILD_ID}'
+                //sh 'docker tag 2244_ica2_develop:latest secarl/2244_ica2:develop-${env.BUILD_ID}'
                 sh 'docker images'
                 sh 'docker run -d -p 8081:80 2244_ica2:latest'
                 sh 'docker ps'
