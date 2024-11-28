@@ -15,7 +15,7 @@ pipeline {
             steps {
                 //echo "This is Build Docker image stage 2"
                 sh 'docker build -t 2244_ica2:latest .'
-                sh "docker tag 2244_ica2:latest secarl/2244_ica2:develop-${env.BUILD_ID}"
+                sh "docker tag 2244_ica2:latest 2244_ica2:develop-${env.BUILD_ID}"
                 sh 'docker images'
                 sh 'docker run -d -p 8081:80 2244_ica2:latest'
                 sh 'docker ps'
@@ -24,6 +24,19 @@ pipeline {
         stage('Testing Website Accessibility'){
             steps {
                 sh 'curl -I localhost:8081'
+            }
+        }
+        stage('Tagging and Push'){
+            steps {
+                sh 'docker tag 2244_ica2:latest secarl/2244_ica2:latest'
+                echo 'Building..'
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-auth', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        sh '''
+                            sudo docker login -u ${USERNAME} -p ${PASSWORD}
+                            sudo docker push secarl/2244_ica2:latest
+                        '''
+                        //sh "sudo docker push sanjeebnepal/devops_exam2:develop-${env.BUILD_ID}"
+
             }
         }
 
