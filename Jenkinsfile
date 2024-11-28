@@ -32,8 +32,8 @@ pipeline {
                 echo 'Building..'
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-auth', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         sh '''
-                            sudo docker login -u ${USERNAME} -p ${PASSWORD}
-                            sudo docker push secarl/2244_ica2:latest
+                            docker login -u ${USERNAME} -p ${PASSWORD}
+                            docker push secarl/2244_ica2:latest
                         '''
                         //sh "sudo docker push sanjeebnepal/devops_exam2:develop-${env.BUILD_ID}"
                     }
