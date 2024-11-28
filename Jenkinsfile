@@ -8,8 +8,9 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                //echo "This is Build Docker image stage"
-                sh 'docker pull secarl77/2244_ica2/develop:latest'
+                //echo "This is Build Docker image stage 2"
+                sh 'docker build -t 2244_ica2_develop:latest .'
+                sh 'docker images'
             }
         }
 
