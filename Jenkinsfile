@@ -15,6 +15,11 @@ pipeline {
                 sh 'docker ps'
             }
         }
+        stage('Testing Website Accessibility'){
+            steps {
+                sh 'curl -I localhost:8081'
+            }
+        }
 
     }
 
