@@ -35,7 +35,7 @@ pipeline {
                             docker login -u ${USERNAME} -p ${PASSWORD}
                             docker push secarl/2244_ica2:latest
                         '''
-                        //sh "sudo docker push sanjeebnepal/devops_exam2:develop-${env.BUILD_ID}"
+                        
                     }
 
             }
